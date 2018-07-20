@@ -1,15 +1,19 @@
+/*---------- IMPORT COMPONENT----------*/
+
 import React, { Component } from 'react';
-import MainNav from './MainNav';
+
+
+/*---------- SEARCHFORM COMPONENT----------*/
 
 class SearchForm  extends Component {
 
   state = {
       searchText: ''
-    }
+    }//end of state
 
     onSearchChange = e => {
       this.setState({ searchText: e.target.value });
-    }
+    }//end of onSearchChange
 
     handleSubmit = e => {
       e.preventDefault();
@@ -17,7 +21,7 @@ class SearchForm  extends Component {
       this.props.onSearch(this.searchTag.value)
 
       e.currentTarget.reset();
-    }
+    }//end of handleSubmit
 
   render(){
     return (
@@ -34,8 +38,11 @@ class SearchForm  extends Component {
           </svg>
         </button>
       </form>
-    );
-  }
-}
+    );//end of return
+  };//end of render
+}//end of SearchForm
+
+
+/*---------- EXPORTS ----------*/
 
 export default SearchForm;

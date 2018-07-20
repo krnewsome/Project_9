@@ -1,4 +1,9 @@
+/*---------- IMPORT COMPONENT----------*/
+
 import React from 'react';
+
+
+/*---------- PHOTO COMPONENT----------*/
 
 const Photo = props => (
   <li className="photo-wrap">
@@ -6,5 +11,8 @@ const Photo = props => (
 } alt=""/>
   </li>
 );
+
+
+/*---------- EXPORTS ----------*/
 
 export default Photo;
