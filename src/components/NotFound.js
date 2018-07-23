@@ -2,11 +2,15 @@
 
 import React from 'react';
 import Cone404 from '../images/Cone404.jpg';
-import { handleButton } from './Gallery';
 import { Link } from 'react-router-dom';
 
 
 /*---------- NOTFOUND COMPONENT----------*/
+//refresh page function
+const handleButton = () => {
+  window.location.reload();
+};
+
 
 const NotFound = () => (
     <ul>

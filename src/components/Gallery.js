@@ -2,14 +2,7 @@
 
 import React from 'react';
 import Photo from './Photo';
-import { Link } from 'react-router-dom';
 import MainNav from './MainNav';
-import SearchButton from './SearchButton';
-
-//refresh page function
-export function handleButton() {
-  window.location.reload();
-};
 
 
 /*---------- GALLERY COMPONENT ----------*/

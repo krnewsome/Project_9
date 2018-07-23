@@ -3,7 +3,7 @@
 import React from 'react';
 import {
   BrowserRouter,
-  Route, NavLink,
+  Route,
   Switch
 } from 'react-router-dom';
 
@@ -13,7 +13,6 @@ import NotFound from './NotFound';
 import axios from 'axios';
 import Gallery from './Gallery';
 import apiKey from '../config';
-import SearchButton from './SearchButton'
 
 /*--------- APP ---------*/
 class App extends React.Component {
@@ -29,7 +28,6 @@ class App extends React.Component {
         cats: [],
         dogs: [],
         photos: [],
-        isHidden: false,
         loading: true,
       };//end of state
   };//end of constructor
@@ -82,7 +80,11 @@ class App extends React.Component {
             <Route path ='/fish' render ={()=> <Gallery data={this.state.fish} searchTag={this.state.searchTagFish}/>}/>
             <Route path ='/cats' render ={()=> <Gallery data={this.state.cats} searchTag={this.state.searchTagCats}/>}/>
             <Route path ='/dogs' render ={()=> <Gallery data={this.state.dogs} searchTag={this.state.searchTagDogs}/>}/>
-            <Route exact path ='/searchResults' render ={()=> <div><SearchForm onSearch={this.performSearch} /> <Gallery data={this.state.photos} /></div>}/>
+            <Route exact path ='/searchResults' render ={()=>
+                <div><SearchForm onSearch={this.performSearch} />
+                <Gallery data={this.state.photos} /></div>
+              }
+            />
             <Route component={NotFound} />
           </Switch>
         <div className="gallery">
