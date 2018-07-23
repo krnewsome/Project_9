@@ -10,7 +10,7 @@ const Photo = props => (
     <img src={`https://farm${props.farmID}.staticflickr.com/${props.serverID}/${props.id}_${props.secret}.jpg`
 } alt=""/>
   </li>
-);
+);//end of Photo component
 
 
 /*---------- EXPORTS ----------*/

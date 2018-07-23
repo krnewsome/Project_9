@@ -13,7 +13,7 @@ import NotFound from './NotFound';
 import axios from 'axios';
 import Gallery from './Gallery';
 import apiKey from '../config';
-
+import SearchButton from './SearchButton'
 
 /*--------- APP ---------*/
 class App extends React.Component {
@@ -21,73 +21,82 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-        photos: [],
+        searchTag: '',
+        searchTagCats: 'Cats',
+        searchTagDogs: 'Dogs',
+        searchTagFish: 'Fish',
         fish: [],
         cats: [],
         dogs: [],
+        photos: [],
+        isHidden: false,
         loading: true,
       };//end of state
-  }//end of constructor
+  };//end of constructor
 
   //call perform search functions to get photos for each category
   componentDidMount() {
-    this.performSearch('fish');
-    this.performSearch('cats');
-    this.performSearch('dogs');
+    this.performSearch('Fish');
+    this.performSearch('Cats');
+    this.performSearch('Dogs');
+  };
 
-  }
 
-  //performSearch function
+  //performSearch function 'axios'
   performSearch = (searchTag) => {
     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&content_type=&per_page=10&tags=${searchTag}&format=json&nojsoncallback=1`)
   .then(response => {
-      if (searchTag === 'cats') {
-        this.setState({ cats: response.data.photos.photo });
-      } else if (searchTag === 'dogs') {
-        this.setState({ dogs: response.data.photos.photo });
-      }else if (searchTag === 'fish') {
-        this.setState({ fish: response.data.photos.photo });
+      if (searchTag === 'Cats') {
+        this.setState({
+          cats: response.data.photos.photo,
+        });
+      } else if (searchTag === 'Dogs') {
+        this.setState({
+          dogs: response.data.photos.photo,
+        });
+      }else if (searchTag === 'Fish') {
+      this.setState({
+          fish: response.data.photos.photo,
+          loading: false,
+
+        });
       } else {
         this.setState({
           photos: response.data.photos.photo,
           loading: false,
+          searchTag: searchTag,
         });
       }
     })//end of promise
     .catch(error => {
       console.log('Error fetching and parsing data');
     });//end of catch
-  }//end of perform search
+  };//end of perform search
 
   render() {
     return (
     <BrowserRouter>
       <div className="app">
-        <nav className="main-nav">
-          <ul>
-            <li><NavLink to={`/searchResults`}>Search</NavLink></li>
-          </ul>
-        </nav>
           <Switch>
-          <Route exact path = '/' render = { () =>  <MainNav /> }/>
-          <Route path ='/fish' render ={()=> <Gallery data={this.state.fish}/>}/>
-          <Route path ='/cats' render ={()=> <Gallery data={this.state.cats}/>}/>
-          <Route path ='/dogs' render ={()=> <Gallery data={this.state.dogs}/>}/>
-          <Route path ='/searchResults' render ={()=> <SearchForm onSearch={this.performSearch} />}/>
-          <Route component={NotFound} />
+            <Route exact path = '/' render = { () => <MainNav />}/>
+            <Route path ='/fish' render ={()=> <Gallery data={this.state.fish} searchTag={this.state.searchTagFish}/>}/>
+            <Route path ='/cats' render ={()=> <Gallery data={this.state.cats} searchTag={this.state.searchTagCats}/>}/>
+            <Route path ='/dogs' render ={()=> <Gallery data={this.state.dogs} searchTag={this.state.searchTagDogs}/>}/>
+            <Route exact path ='/searchResults' render ={()=> <div><SearchForm onSearch={this.performSearch} /> <Gallery data={this.state.photos} /></div>}/>
+            <Route component={NotFound} />
           </Switch>
         <div className="gallery">
           {
             (this.state.loading)
-            ? <p>Please search or select a category above</p>
-            : <Gallery data={this.state.photos}/>
+            ? <p>Loading...</p>
+            : <p>Please search or select a category</p>
           }
         </div>
       </div>
     </BrowserRouter>
   );//end of return
-  }//end of render
-}//end of APP
+  };//end of render
+};//end of APP
 
 
 /*---------- EXPORTS ----------*/

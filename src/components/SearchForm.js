@@ -8,22 +8,20 @@ import React, { Component } from 'react';
 class SearchForm  extends Component {
 
   state = {
-      searchText: ''
-    }//end of state
+    searchText: '',
+  }//end of state
 
-    onSearchChange = e => {
-      this.setState({ searchText: e.target.value });
-    }//end of onSearchChange
+  onSearchChange = e => {
+    this.setState({ searchText: e.target.value });
+  };//end of onSearchChange
 
-    handleSubmit = e => {
-      e.preventDefault();
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.onSearch(this.searchTag.value)
+    e.currentTarget.reset();
+  };//end of handleSubmit
 
-      this.props.onSearch(this.searchTag.value)
-
-      e.currentTarget.reset();
-    }//end of handleSubmit
-
-  render(){
+  render() {
     return (
       <form className="search-form" onSubmit={this.handleSubmit}>
         <input type="search"
@@ -40,7 +38,7 @@ class SearchForm  extends Component {
       </form>
     );//end of return
   };//end of render
-}//end of SearchForm
+}//end of SearchForm component
 
 
 /*---------- EXPORTS ----------*/
