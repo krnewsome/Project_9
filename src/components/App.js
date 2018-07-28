@@ -37,8 +37,7 @@ class App extends React.Component {
     this.performSearch('Fish');
     this.performSearch('Cats');
     this.performSearch('Dogs');
-  };
-
+  }
 
   //performSearch function 'axios'
   performSearch = (searchTag) => {
@@ -53,7 +52,7 @@ class App extends React.Component {
           dogs: response.data.photos.photo,
         });
       }else if (searchTag === 'Fish') {
-      this.setState({
+        this.setState({
           fish: response.data.photos.photo,
           loading: false,
 
@@ -82,7 +81,13 @@ class App extends React.Component {
             <Route path ='/dogs' render ={()=> <Gallery data={this.state.dogs} searchTag={this.state.searchTagDogs}/>}/>
             <Route exact path ='/searchResults' render ={()=>
                 <div><SearchForm onSearch={this.performSearch} />
-                <Gallery data={this.state.photos} /></div>
+                  {
+                    (this.state.searchTag === '')
+
+                    ? <p>Please enter a search term</p>
+                    : < Gallery data={this.state.photos} searchTag={this.state.searchTag} />
+                  }
+                </div>
               }
             />
             <Route component={NotFound} />
@@ -91,7 +96,7 @@ class App extends React.Component {
           {
             (this.state.loading)
             ? <p>Loading...</p>
-            : <p>Please search or select a category</p>
+            : <p>Start Search for Images</p>
           }
         </div>
       </div>
